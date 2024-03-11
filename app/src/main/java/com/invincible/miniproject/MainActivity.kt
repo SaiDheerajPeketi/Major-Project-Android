@@ -91,8 +91,8 @@ class MainActivity : ComponentActivity() {
 
                     Button(
                         onClick = {
-//                           Toast.makeText(this@MainActivity, userNameInput, Toast.LENGTH_LONG).show()
-//                           Toast.makeText(this@MainActivity, password, Toast.LENGTH_LONG).show()
+                            val intent: Intent = Intent(this@MainActivity, LiveDataActivity::class.java)
+                            startActivity(intent)
                         }
                     ) {
                         Text(text = "Login")
