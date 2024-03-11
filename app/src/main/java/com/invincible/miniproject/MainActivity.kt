@@ -100,7 +100,8 @@ class MainActivity : ComponentActivity() {
 
                     OutlinedButton(
                             onClick = {
-                                val intent: Intent = Intent()
+                                val intent: Intent = Intent(this@MainActivity, RegisterActivity::class.java)
+                                startActivity(intent)
                             }
                         ) {
                             Text(text = "New User?")

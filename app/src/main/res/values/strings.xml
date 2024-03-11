@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MiniProject</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_live_data">LiveDataActivity</string>
 </resources>
