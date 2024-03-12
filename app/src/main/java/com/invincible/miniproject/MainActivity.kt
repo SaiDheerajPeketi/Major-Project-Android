@@ -28,13 +28,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.invincible.miniproject.ui.theme.MiniProjectTheme
+import com.airbnb.lottie.compose.LottieAnimation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +61,8 @@ class MainActivity : ComponentActivity() {
                     painterResource(id = R.drawable.show_star)
                 else
                     painterResource(id = R.drawable.show_eye)
+
+//                LottieAnimation()
 
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -110,4 +119,30 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+@Composable
+fun LottieAnimation() {
+    // Way 1: Using a Raw Animation File
+    val rawComposition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.moving_blocks))
+
+    // Way 2: Using an Animation URL
+//    val urlComposition by rememberLottieComposition(spec = LottieCompositionSpec.Url("https://lottie.host/0696621c-a35b-48df-adb9-631e81d6ca59/5nlsTfOUgN.lottie"))
+
+    val progress by animateLottieCompositionAsState(composition = rawComposition) // Use 'urlComposition' for Way 2
+
+//    LottieAnimation(
+//        composition = rawComposition, // Use 'urlComposition' for Way 2
+//        progress = progress,
+//        modifier = Modifier.fillMaxSize(),
+//        contentScale = ContentScale.FillBounds,
+//        colorFilter = ColorFilter.tint(Color.Black)
+//    )
+
+    LottieAnimation(
+        composition = rawComposition,
+        progress = progress,
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.FillBounds
+    )
 }
