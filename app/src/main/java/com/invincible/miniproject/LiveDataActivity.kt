@@ -5,9 +5,11 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,15 +36,17 @@ import androidx.compose.runtime.setValue
 class LiveDataActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        getLatestData()
         setContent {
             MiniProjectTheme {
                 var listState by remember { mutableStateOf(listOf(60.0f, 70.0f, 60.0f, 55.0f, 90.0f, 50.0f, 60.0f, 70.0f, 75.0f, 70.0f, 60.0f, 65.0f, 60.0f)) }
 
+                BPMDisplay(currValue = listState.get(listState.lastIndex))
+                
                 PerformanceChart(list = listState)
 
                 LaunchedEffect(key1 = true) {
                     while(true){
+                        getLatestData()
                         delay(500)
                         val nextList: MutableList<Float> = mutableListOf()
                         val first = listState.first()
@@ -55,10 +59,10 @@ class LiveDataActivity : ComponentActivity() {
         }
     }
 
-    private fun getLatestData(){
+    private fun getLatestData() {
         val retrofitBuilder = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://http://20.205.136.25/")
+            .baseUrl("http://20.205.136.25/")
             .build()
             .create(ApiInterface::class.java)
 
@@ -71,7 +75,7 @@ class LiveDataActivity : ComponentActivity() {
             ) {
                 val responseValue = response.body()!!
 
-                val responseFloatValue = responseValue.response.toDouble()
+                val responseFloatValue = responseValue.response.toFloat()
 
                 Log.e("myDebugTag", "onResponse: " + responseFloatValue, )
             }
@@ -117,4 +121,14 @@ fun PerformanceChart(modifier: Modifier = Modifier, list: List<Float>) {
 
 private fun getValuePercentageForRange(value: Float, max: Float, min: Float): Float {
     return (value - min) / (max - min)
+}
+
+@Composable
+fun BPMDisplay(currValue: Float){
+    Box (modifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight(0.3f)
+    ){
+        
+    }
 }
