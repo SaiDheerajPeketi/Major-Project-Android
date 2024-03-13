@@ -73,4 +73,15 @@ dependencies {
 
     // Lottie
     implementation("com.airbnb.android:lottie-compose:6.4.0")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.7.1")
+    implementation("com.squareup.okhttp3:okhttp:3.14.7")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.14.7")
+    // Gson
+    implementation("com.squareup.retrofit2:converter-gson:2.7.1")
+
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.3")
+
+
 }
