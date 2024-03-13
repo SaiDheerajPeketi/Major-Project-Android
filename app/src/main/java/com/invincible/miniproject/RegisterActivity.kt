@@ -6,9 +6,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +31,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.invincible.miniproject.ui.theme.MiniProjectTheme
 
 class RegisterActivity : ComponentActivity() {
@@ -50,6 +54,16 @@ class RegisterActivity : ComponentActivity() {
                 var confirm_passwordVisibility by remember {
                     mutableStateOf(false)
                 }
+                var emailInput by remember {
+                    mutableStateOf("")
+                }
+                var checkedState by remember {
+                    mutableStateOf(false)
+                }
+                var doctorLicenseInput by remember {
+                    mutableStateOf("")
+                }
+
                 val icon = if (passwordVisibility)
                     painterResource(id = R.drawable.show_star)
                 else
@@ -70,6 +84,14 @@ class RegisterActivity : ComponentActivity() {
                             userNameInput = it
                         },
                         placeholder = { Text(text = "Username") }
+                    )
+
+                    TextField(
+                        value = emailInput,
+                        onValueChange = {
+                            emailInput = it
+                        },
+                        placeholder = { Text(text = "Email Address") }
                     )
 
                     TextField(
@@ -113,6 +135,33 @@ class RegisterActivity : ComponentActivity() {
                         visualTransformation = if (confirm_passwordVisibility) VisualTransformation.None
                         else PasswordVisualTransformation()
                     )
+
+                    if(checkedState){
+                        TextField(
+                            value = doctorLicenseInput,
+                            onValueChange = {
+                                doctorLicenseInput = it
+                            },
+                            placeholder = { Text(text = "Doctor License") }
+                        )
+                    }
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(
+                            // below line we are setting
+                            // the state of checkbox.
+                            checked = checkedState,
+                            // below line is use to add padding
+                            // to our checkbox.
+                            modifier = Modifier.padding(1.dp),
+                            // below line is use to add on check
+                            // change to our checkbox.
+                            onCheckedChange = { checkedState = it },
+                        )
+                        // below line is use to add text to our check box and we are
+                        // adding padding to our text of checkbox
+                        Text(text = "I'm a Doctor", modifier = Modifier.padding(16.dp))
+                    }
 
                     Button(
                         onClick = {

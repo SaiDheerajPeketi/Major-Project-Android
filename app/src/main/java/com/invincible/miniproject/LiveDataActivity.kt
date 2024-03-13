@@ -2,14 +2,21 @@ package com.invincible.miniproject
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,6 +38,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 
 class LiveDataActivity : ComponentActivity() {
@@ -46,13 +56,19 @@ class LiveDataActivity : ComponentActivity() {
 
                 LaunchedEffect(key1 = true) {
                     while(true){
-                        getLatestData()
                         delay(500)
                         val nextList: MutableList<Float> = mutableListOf()
                         val first = listState.first()
                         nextList.addAll(listState.drop(1))
                         nextList.add(first)
                         listState = nextList
+                    }
+                }
+
+                LaunchedEffect(key1 = true){
+                    while (true){
+                        delay(5000)
+                        getLatestData()
                     }
                 }
             }
@@ -78,6 +94,8 @@ class LiveDataActivity : ComponentActivity() {
                 val responseFloatValue = responseValue.response.toFloat()
 
                 Log.e("myDebugTag", "onResponse: " + responseFloatValue, )
+
+                Toast.makeText(applicationContext, responseFloatValue.toString(), Toast.LENGTH_SHORT).show()
             }
 
             override fun onFailure(call: Call<ResponseDataClass?>, t: Throwable) {
@@ -127,8 +145,23 @@ private fun getValuePercentageForRange(value: Float, max: Float, min: Float): Fl
 fun BPMDisplay(currValue: Float){
     Box (modifier = Modifier
         .fillMaxWidth()
-        .fillMaxHeight(0.3f)
+        .fillMaxHeight(0.20f)
     ){
-        
+        Column(
+            Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.End)
+        {
+            Row {
+//                Image(imageVector = , contentDescription = "Heart")
+                Text(
+                    text = "♥ " + currValue.toString(),
+                    fontSize = 24.sp
+                )
+                
+                Spacer(modifier = Modifier.width(35.dp))
+            }
+
+        }
     }
 }
