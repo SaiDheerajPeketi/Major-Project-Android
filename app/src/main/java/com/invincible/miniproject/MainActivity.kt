@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -37,11 +39,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.invincible.miniproject.ui.theme.MiniProjectTheme
 import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieConstants
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,12 +67,18 @@ class MainActivity : ComponentActivity() {
                     painterResource(id = R.drawable.show_eye)
 
 //                LottieAnimation()
+                
+
 
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().background(Color.White),
                     verticalArrangement = Arrangement.SpaceEvenly,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Text(text = "Mini Project Login", fontSize = 40.sp)
+                    LottieAnimation()
+//
+
                     TextField(
                         value = userNameInput,
                         onValueChange = {
@@ -109,11 +119,11 @@ class MainActivity : ComponentActivity() {
 
                     OutlinedButton(
                             onClick = {
-                                val intent: Intent = Intent(this@MainActivity, RegisterActivity::class.java)
+                                val intent: Intent = Intent(this@MainActivity, DoctorActivity::class.java)
                                 startActivity(intent)
                             }
                         ) {
-                            Text(text = "New User?")
+                            Text(text = "Doctor")
                         }
                 }
             }
@@ -141,8 +151,10 @@ fun LottieAnimation() {
 
     LottieAnimation(
         composition = rawComposition,
-        progress = progress,
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.FillBounds
+        iterations = LottieConstants.IterateForever,
+//        progress = progress,
+        modifier = Modifier.size(200.dp),
+        contentScale = ContentScale.FillBounds,
+
     )
 }
